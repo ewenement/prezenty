@@ -18,6 +18,7 @@ env = Environment(loader=FileSystemLoader(TEMPLATES_PATH), autoescape=False)
 
 
 # === WIDOK ===
+@cherrypy.popargs('user_id', 'list_id')
 class Main_Page(object):
 
     @cherrypy.expose
@@ -25,9 +26,36 @@ class Main_Page(object):
         tmpl = env.get_template('index.html')
         return tmpl.generate({})
 
-    @cherrypy.expose
-    def ico(self, **kwargs):
-        return str(kwargs)
+    @cherrypy.expose('listy_ewy')
+    def ewas_gift_lists(self, user_id):
+        tmpl = env.get_template('ewas_gift_lists.html')
+        ctx = {
+            'lists': {
+                1: u'na urodziny',
+                2: u'na imieniny',
+                3: u'na dzień kotka',
+            }
+        }
+        return tmpl.generate(ctx)
+
+    @cherrypy.expose('lista_ewy')
+    def ewas_gift_list(self, user_id, list_id):
+        tmpl = env.get_template('ewas_gift_list.html')
+        ctx = {
+            'gifts': [
+                [1, u'buttplug z ogonem', 20, 'sexlaski.pl/sklep'],
+                [2, u'kocie żarcie', 20, 'sexlaski.pl/sklep'],
+                [4, u'kajdanki', 50, 'definefetish.com/sklep'],
+                [3, u'strój księżniczki lei', 200, 'starwars.com/store/perversions'],
+            ]
+        }
+
+        return tmpl.generate(ctx)
+
+    @cherrypy.expose('dodaj_do_listy')
+    def add_gift_to_list(self, list_id, **kwargs):
+        tmpl = env.get_template('add_gift_to_list.html')
+        return tmpl.generate(kwargs)
 
 
 # ====== URUCHOMIENIE SERWERA ======
