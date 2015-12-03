@@ -3,5 +3,20 @@
 {% block body %}
 
 <h4>Witaj</h4>
+<br>cokolwiek<br>
+cycki: {{ cycki }}
+<BR>
+cos: {{ cos }}<br>
+lista: {{ lista }}<BR>
+duze: {{ duze }}<br>
+
+cycki {% if duze %} sa fajne {% else %} smutek {% endif %}<BR>
+cycki {% if duze %} sa fajne {% elif lista %} mózgi {% else %} smutek {% endif %} <BR>
+
+<ul>
+	{% for chuj in lista %}
+		<li> {{ chuj }}</li>
+	{% endfor %} 
+</ul>
 
 {% endblock %}

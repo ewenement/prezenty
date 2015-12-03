@@ -24,7 +24,13 @@ class Main_Page(object):
     @cherrypy.expose
     def index(self):
         tmpl = env.get_template('index.html')
-        return tmpl.generate({})
+        lista = ['fiut','penis',u'kuśka','pyta','kutas','buzdygan']
+        return tmpl.generate({
+            'lista': lista,
+            'cos': 'dupa',
+            'cycki': 'fajne',
+            'duze': False,	
+        })
 
     @cherrypy.expose('listy_ewy')
     def ewas_gift_lists(self, user_id):
