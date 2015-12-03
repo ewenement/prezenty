@@ -3,20 +3,11 @@
 {% block body %}
 
 	<h4>PREZENTY</h4>
+
 	<ul>
 		{% for prezent in gifts %}
 			<li> 
-				{% for liczba in prezent %} 
-					{{ liczba }}
-				{% endfor %}
-			</li> 
-		{% endfor %}
-	</ul><BR><BR>
-	<ul>
-		{% for prezent in gifts %}
-			<li> 
-					{{ prezent[1] }} - {{ prezent[2] }}zł - {{ prezent[3] }}
-		
+				{{ prezent[1] }} - {{ prezent[2] }}zł - {{ prezent[3] }}
 			</li> 
 		{% endfor %}
 	</ul>
