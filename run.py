@@ -13,12 +13,11 @@ STATIC_PATH = os.path.join(DIR_PATH, "Static")
 TEMPLATES_PATH = os.path.join(DIR_PATH, "Templates")
 
 # jinja enviorment
-print TEMPLATES_PATH
 env = Environment(loader=FileSystemLoader(TEMPLATES_PATH), autoescape=False)
 
 
 # === WIDOK ===
-@cherrypy.popargs('user_id', 'list_id')
+
 class Main_Page(object):
 
     @cherrypy.expose
@@ -33,7 +32,7 @@ class Main_Page(object):
         })
 
     @cherrypy.expose('listy_ewy')
-    def ewas_gift_lists(self, user_id):
+    def ewas_gift_lists(self):
         tmpl = env.get_template('ewas_gift_lists.html')
         ctx = {
             'lists': {
@@ -45,14 +44,14 @@ class Main_Page(object):
         return tmpl.generate(ctx)
 
     @cherrypy.expose('lista_ewy')
-    def ewas_gift_list(self, user_id, list_id):
+    def ewas_gift_list(self):
         tmpl = env.get_template('ewas_gift_list.html')
         ctx = {
             'gifts': [
                 [1, u'buttplug z ogonem', 20, 'sexlaski.pl/sklep'],
                 [2, u'kocie żarcie', 20, 'sexlaski.pl/sklep'],
                 [4, u'kajdanki', 50, 'definefetish.com/sklep'],
-                [3, u'strój księżniczki lei', 200, 'starwars.com/store/perversions'],
+                [3, u'strój księżniczki Lei', 200, 'starwars.com/store/perversions'],
             ]
         }
 
@@ -73,4 +72,4 @@ print (u'Zaczynam działać na {0}:{1}'.format(
         settings.conf['server.socket_host'],
         settings.conf['server.socket_port'],
     ))
-cherrypy.quickstart(root, config=settings.section)
+cherrypy.quickstart(root, '/', config=settings.section)
