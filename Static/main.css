@@ -4,11 +4,11 @@
 }
 
 body {
-    background-color:#F5FFF5;
+    background-color:#FFFFF;
     text-align: center;
-    font-family: 'Georgia',serif;
+    font-family: 'Cambria',serif;
 }
 
 a:link {color: #191970;}
 a:visited{color: #191970;}
-a:hover{color: #FF4500;}
+a:hover{color: #E61C66;}
