@@ -2,6 +2,18 @@
 
 {% block body %}
 
-<h4>Witaj</h4>
+<h4>DODAJ MNIE</h4>
+	<form action="" method="post">
+		gdzie <input type="url" name="store"> <BR>	
+		ile <input type="text" name="quantity"> <BR>
+		$$$ <input type="number" name="prize"> <BR>
+		CHCĘ <select name="product_id">
+			{% for kupmi in products %}
+				<option value="{{ kupmi.id }}"> {{ kupmi.name }} </option>
+				{# pentle chuj chuj chuj #}
+			{% endfor %}
+			</select>
+		<button type="submit">kliknij mnie</button>
+	</form>
 
 {% endblock %}
