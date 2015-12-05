@@ -42,21 +42,30 @@ class Main_Page(object):
     @cherrypy.expose('lista_ewy')
     def ewas_gift_list(self):
         tmpl = env.get_template('ewas_gift_list.html')
+        session = models.Session()
+
         ctx = {
-            'gifts': [
-                [1, u'buttplug z ogonem', 20, 'sexlaski.pl/sklep'],
-                [2, u'kocie żarcie', 20, 'sexlaski.pl/sklep'],
-                [4, u'kajdanki', 50, 'definefetish.com/sklep'],
-                [3, u'strój księżniczki Lei', 200, 'starwars.com/store/perversions'],
-            ]
+            'gifts': session.query(models.GiftRequest).join(models.GiftProduct).all()
         }
 
         return tmpl.generate(ctx)
 
     @cherrypy.expose('dodaj_do_listy')
-    def add_gift_to_list(self, list_id, **kwargs):
+    def add_gift_to_list(self, **kwargs):
         tmpl = env.get_template('add_gift_to_list.html')
-        return tmpl.generate(kwargs)
+        session = models.Session()
+
+        if kwargs:
+            kwargs.update(list_id=1)
+            session.add(models.GiftRequest(**kwargs))
+            session.commit()
+
+            # redirect
+            raise cherrypy.HTTPRedirect("/lista_ewy", 303)
+
+        ctx = {'products': session.query(models.GiftProduct).all()}
+
+        return tmpl.generate(ctx)
 
 
 # ====== URUCHOMIENIE SERWERA ======
