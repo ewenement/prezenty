@@ -7,6 +7,8 @@ import cherrypy
 from jinja2 import Environment, FileSystemLoader
 
 import settings
+import models
+
 
 DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 STATIC_PATH = os.path.join(DIR_PATH, "Static")
