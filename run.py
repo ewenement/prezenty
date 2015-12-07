@@ -27,16 +27,29 @@ class Main_Page(object):
         tmpl = env.get_template('index.html')
         return tmpl.generate({})
 
+
+    @cherrypy.expose('dodaj_liste')
+    def add_new_gift_list(self, **kwargs):
+        if kwargs:
+            session = models.Session()
+            session.add(models.GiftList(**kwargs))
+            session.commit()
+
+            # redirect
+            raise cherrypy.HTTPRedirect("/listy_ewy", 303)
+
+        tmpl = env.get_template('new_list.html')
+        return tmpl.generate({})
+
     @cherrypy.expose('listy_ewy')
     def ewas_gift_lists(self):
+        session = models.Session()
+
         tmpl = env.get_template('ewas_gift_lists.html')
         ctx = {
-            'lists': {
-                1: u'na urodziny',
-                2: u'na imieniny',
-                3: u'na dzień kotka',
-            }
+            'lists': session.query(models.GiftList).all()
         }
+
         return tmpl.generate(ctx)
 
     @cherrypy.expose('lista_ewy')
@@ -52,10 +65,8 @@ class Main_Page(object):
 
     @cherrypy.expose('dodaj_do_listy')
     def add_gift_to_list(self, **kwargs):
-        tmpl = env.get_template('add_gift_to_list.html')
-        session = models.Session()
-
         if kwargs:
+            session = models.Session()
             kwargs.update(list_id=1)
             session.add(models.GiftRequest(**kwargs))
             session.commit()
@@ -63,6 +74,7 @@ class Main_Page(object):
             # redirect
             raise cherrypy.HTTPRedirect("/lista_ewy", 303)
 
+        tmpl = env.get_template('add_gift_to_list.html')
         ctx = {'products': session.query(models.GiftProduct).all()}
 
         return tmpl.generate(ctx)
